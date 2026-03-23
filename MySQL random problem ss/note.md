@@ -39,3 +39,91 @@ FROM (
 ) AS t
 WHERE rn IN (FLOOR((total + 1)/2), FLOOR((total + 2)/2));
 ```
+
+
+Explanation: <br>
+# 📊 Median of Northern Latitudes (LAT_N)
+
+## 🔍 Step-by-Step Explanation
+
+### 1. Inner Query
+
+```sql
+SELECT LAT_N, 
+       ROW_NUMBER() OVER (ORDER BY LAT_N) AS rn,
+       COUNT(*) OVER () AS total
+FROM STATION
+```
+
+* `ROW_NUMBER() OVER (ORDER BY LAT_N)`
+  → Assigns a position (`rn`) to each row after sorting `LAT_N` in ascending order.
+
+* `COUNT(*) OVER ()`
+  → Returns the **total number of rows** for every row.
+
+📌 Example:
+
+| LAT_N | rn | total |
+| ----- | -- | ----- |
+| 10    | 1  | 5     |
+| 20    | 2  | 5     |
+| 30    | 3  | 5     |
+| 40    | 4  | 5     |
+| 50    | 5  | 5     |
+
+---
+
+### 2. Finding Median Position
+
+```sql
+WHERE rn IN (FLOOR((total + 1)/2), FLOOR((total + 2)/2))
+```
+
+This handles both cases:
+
+#### ✅ Odd number of rows:
+
+* Example: total = 5
+* Median index = 3
+* Formula gives: (3, 3) → selects one value
+
+#### ✅ Even number of rows:
+
+* Example: total = 6
+* Median indices = 3 and 4
+* Formula gives: (3, 4) → selects two values
+
+---
+
+### 3. Final Step
+
+```sql
+SELECT ROUND(AVG(LAT_N), 4)
+```
+
+* `AVG()` → calculates median
+
+  * One value (odd case) → returns that value
+  * Two values (even case) → returns average
+* `ROUND(..., 4)` → formats result to 4 decimal places
+
+---
+
+## 🎯 Key Idea
+
+* Sort the data
+* Find middle position(s)
+* Use `AVG()` to compute median
+* Use `ROUND()` for formatting
+
+---
+
+## ✅ Summary
+
+| Case       | Rows Selected | Result       |
+| ---------- | ------------- | ------------ |
+| Odd count  | 1 row         | Middle value |
+| Even count | 2 rows        | Average      |
+
+---
+
