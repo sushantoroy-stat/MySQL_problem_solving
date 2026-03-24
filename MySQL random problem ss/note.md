@@ -127,3 +127,49 @@ SELECT ROUND(AVG(LAT_N), 4)
 
 ---
 
+
+
+
+🧑‍💻Question: Given the CITY and COUNTRY tables, find the total population of all cities that are located in the continent 'Asia'. The CITY.CountryCode and COUNTRY.Code columns are matching keys used to join the tables. <br>
+Solve:
+```sql
+SELECT SUM(CITY.POPULATION)
+FROM CITY
+JOIN COUNTRY
+ON CITY.CountryCode = COUNTRY.Code
+WHERE COUNTRY.CONTINENT = 'Asia';
+```
+
+🧑‍💻Question: Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
+
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+
+Solve: 
+```sql
+SELECT COUNTRY.Continent, FLOOR(AVG(CITY.Population))
+FROM CITY
+JOIN COUNTRY
+ON CITY.CountryCode = COUNTRY.Code
+GROUP BY COUNTRY.Continent;
+```
+
+Note: The SQL FLOOR() function is a mathematical function that rounds a given numeric value down to the nearest integer that is less than or equal to the input value. It effectively removes the decimal portion for positive numbers, but rounds further away from zero for negative numbers. <br>
+Example:  SELECT FLOOR(123.45); Output: 123	 Here, 123 is the largest integer less than or equal to 123.45. <br>
+SELECT FLOOR(11.99); Output: 11, Here, 11 is the largest integer less than or equal to 11.99. <br>
+Negative Decimal, 	SELECT FLOOR(-123.45); Output: 	-124. here,	-124 is the largest integer less than or equal to -123.45. <br>
+SELECT FLOOR(-5.1);	Outpot: -6, here,	-6 is the largest integer less than or equal to -5.1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
