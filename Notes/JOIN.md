@@ -33,6 +33,24 @@ W3Schools
 <img width="231" height="158" alt="image" src="https://github.com/user-attachments/assets/d672d3ab-3674-4080-a48c-19a7b2048095" />
 
 
+## NB: 
+For example we consider left join <br>
+- LEFT JOIN: Returns all rows from the left table, with NULL for unmatched right table rows. <br>
+Here, left table is simply the table that appears before LEFT JOIN in your SQL query.
+
+Example:
+```sql
+SELECT *
+FROM customers
+LEFT JOIN orders
+ON customers.customer_id = orders.customer_id;
+```
+Explanation: <br>
+Left table: customers ✅ <br>
+Right table: orders
+
+Similarly, for the others join.
+
 
 
 
